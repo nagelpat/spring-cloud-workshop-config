@@ -1,0 +1,21 @@
+server.port: ${PORT:8082}
+
+logging:
+  level:
+    io.pivotal.demo: info
+
+# move this to central config
+eureka:
+  client:
+    registerWithEureka: false  # we dont want to register with eureka server
+    fetchRegistry: true # but we want to discover other the services
+
+zuul:
+  prefix: /api
+  ignored-services: '*'
+  routes:
+    demo: /demo-service/**
+
+# curl localhost:8082/api/demo-service/hello
+# if we dont want to use eureka then we woudl have to set the url of each service and disable
+# eureka => ribbon.eureka.enabled: false
